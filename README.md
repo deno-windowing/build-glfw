@@ -1,2 +1,3 @@
-# build-glfw
+# Build GLFW
+
 Automated GLFW builds

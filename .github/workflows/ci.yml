@@ -26,15 +26,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install xorg-dev libwayland-dev libxkbcommon-dev wayland-protocols extra-cmake-modules
         
-      - name: Generate Build Files
+      - name: Generate Build Files (Unix)
+        if: matrix.os != 'windows-latest'
         run: |
           mkdir build
           cmake -S ./glfw -B ./build -D BUILD_SHARED_LIBS=ON
+        
+      - name: Generate Build Files (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          mkdir build
+          cmake -G "Visual Studio 17 2022" -S ./glfw -B ./build -D BUILD_SHARED_LIBS=ON
 
       - name: Build
-        run: |
-          cd build
-          make -j2
+        run: cmake --build ./build --config Release
 
       - name: Release
         if: ${{ github.ref == 'refs/heads/main' }}
@@ -45,6 +50,6 @@ jobs:
           tag_name: "Release Draft"
           draft: true
           files: |
-            build/libglfw3.so
-            build/libglfw3.dylib
-            build/glfw3.dll
+            build/src/libglfw.so
+            build/src/libglfw.dylib
+            build/src/glfw.dll
