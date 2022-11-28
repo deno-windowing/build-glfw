@@ -1,2 +1,6 @@
 build/
 .vscode/
+*.so
+*.dylib
+*.dll
+glfw3_*.js
