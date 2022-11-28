@@ -52,4 +52,4 @@ jobs:
           files: |
             build/src/libglfw.so
             build/src/libglfw.dylib
-            build/src/glfw.dll
+            build/src/Release/glfw3.dll
