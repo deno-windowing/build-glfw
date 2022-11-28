@@ -47,5 +47,5 @@ jobs:
             libglfw3.dylib
             glfw3.dll
             glfw3_linux.js
-            glfw3_macos.js
+            glfw3_darwin.js
             glfw3_windows.js
