@@ -68,7 +68,7 @@ Deno.writeTextFileSync(
   OUT_FILE,
   `const BASE64 = "${
     encode(Deno.readFileSync(BIN_FILE))
-  }";\nfunction decode(b64) {\n  const binString = atob(b64);\n  const size = binString.length;\n  const bytes = new Uint8Array(size); \n  for (let i = 0; i < size; i++) {\n    bytes[i] = binString.charCodeAt(i);\n  }\n  return bytes;\n}\nconst DECODED = Deno.build.os === "${Deno.build.os}" && Deno.build.arch === "${Deno.build.arch}" ? Deno.core.ops.op_base64_decode(BASE64) : new Uint8Array();\nexport default DECODED;\n`,
+  }";\nfunction decode(b64) {\n  const binString = atob(b64);\n  const size = binString.length;\n  const bytes = new Uint8Array(size); \n  for (let i = 0; i < size; i++) {\n    bytes[i] = binString.charCodeAt(i);\n  }\n  return bytes;\n}\nconst DECODED = Deno.build.os === "${Deno.build.os}" && Deno.build.arch === "${Deno.build.arch}" ? decode(BASE64) : new Uint8Array();\nexport default DECODED;\n`,
 );
 
 console.log(`%cWrote ${OUT_FILE}`, "color: #888");
