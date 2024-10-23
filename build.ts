@@ -1,4 +1,4 @@
-import { encodeBase64 } from "https://deno.land/std@0.212.0/encoding/base64.ts";
+import { encodeBase64 } from "@std/encoding/base64";
 
 const $ = (cmd: string, ...args: string[]) => {
   console.log(`%c$ ${cmd} ${args.join(" ")}`, "color: #888");
@@ -62,13 +62,25 @@ Deno.copyFileSync(BUILD_FILE, BIN_FILE);
 
 const OUT_FILE = `./glfw3_${Deno.build.os}${
   Deno.build.arch === "aarch64" ? "_aarch64" : ""
-}.js`;
+}.ts`;
+
+const decodeFunction = [
+  "function decodeBase64(b64: string): Uint8Array {",
+  "  const binString = atob(b64);",
+  "  const size = binString.length;",
+  "  const bytes = new Uint8Array(size);",
+  "  for (let i = 0; i < size; i++) {",
+  "    bytes[i] = binString.charCodeAt(i);",
+  "  }",
+  "  return bytes;",
+  "}",
+].join("\n");
 
 Deno.writeTextFileSync(
   OUT_FILE,
-  `import { decodeBase64 } from "https://deno.land/std@0.212.0/encoding/base64.ts";\nconst BASE64 = "${
+  `${decodeFunction}\nconst BASE64 = "${
     encodeBase64(Deno.readFileSync(BIN_FILE))
-  }";\nconst DECODED = Deno.build.os === "${Deno.build.os}" && Deno.build.arch === "${Deno.build.arch}" ? decodeBase64(BASE64) : new Uint8Array();\nexport default DECODED;\n`,
+  }";\nconst DECODED: Uint8Array = Deno.build.os === "${Deno.build.os}" && Deno.build.arch === "${Deno.build.arch}" ? decodeBase64(BASE64) : new Uint8Array();\nexport default DECODED;\n`,
 );
 
 console.log(`%cWrote ${OUT_FILE}`, "color: #888");

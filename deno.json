@@ -1,5 +1,21 @@
 {
+  "name": "@gfx/build-glfw",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "exports": {
+    "./darwin": "./glfw3_darwin.ts",
+    "./darwin-aarch64": "./glfw3_darwin_aarch64.ts",
+    "./linux": "./glfw3_linux.ts",
+    "./windows": "./glfw3_windows.ts"
+  },
+  "imports": {
+    "@std/encoding": "jsr:@std/encoding@1.0.5"
+  },
   "tasks": {
-    "build": "deno run -A --unstable ./build.ts"
-  }
+    "build": "deno run --allow-write --allow-read --allow-run  ./build.ts"
+  },
+  "exclude": [
+    "build",
+    "glfw"
+  ]
 }

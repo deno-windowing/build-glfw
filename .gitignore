@@ -3,4 +3,3 @@ build/
 *.so
 *.dylib
 *.dll
-glfw3_*.js

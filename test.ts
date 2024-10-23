@@ -1,4 +1,4 @@
-import bin from "./glfw3_linux.js";
+import bin from "./glfw3_linux.ts";
 
 const start = performance.now();
 const tmp = Deno.makeTempFileSync();
